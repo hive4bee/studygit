@@ -1,0 +1,440 @@
+---원격 저장소로 부터 내려받아 작업하기
+$ git clone https://github.com/hive4bee/studygit.git git_home
+
+$ git clone https://github.com/hive4bee/studygit.git git_office
+
+$ cd git_home
+
+$ git log
+commit 1d0d013660f8c4a47d9fb1e6a32c2936042d0b66 (HEAD -> master, origin/master, origin/HEAD)
+Author: An Seongjin <66734106+hive4bee@users.noreply.github.com>
+Date:   Fri Jun 19 14:44:05 2020 +0900
+
+    Update 03_깃허브로 백업하기.txt
+
+commit 11888ece0357a11c4000ef2b164521318e6ac769
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:44:36 2020 +0900
+
+    f5
+
+commit e64a587a2b2e4bca8996e9e11994defbd88ea441
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:43:23 2020 +0900
+
+    f4
+
+commit d71ab63a134c5a7adab2234ce373464cfa8e510d
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:42:15 2020 +0900
+
+$ git remote -v
+origin  https://github.com/hive4bee/studygit.git (fetch)
+origin  https://github.com/hive4bee/studygit.git (push)
+
+$ vim f1.txt // add c
+
+$ git commit -am "add ccc"
+[master 59776cf] add ccc
+ 1 file changed, 1 insertion(+)
+ 
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 253 bytes | 253.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/hive4bee/studygit.git
+   1d0d013..59776cf  master -> master
+
+
+
+---git_home의 최신커잇 원격으로 올라가 최신 커밋으로 바뀌었기에 git_office에서 pull을 먼저 하여 최신 커밋을 가져온다.
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), 233 bytes | 1024 bytes/s, done.
+From https://github.com/hive4bee/studygit
+   1d0d013..59776cf  master     -> origin/master
+Updating 1d0d013..59776cf
+Fast-forward
+ f1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ vim f1.txt // add d
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git commit -am "add d"
+[master bca08ea] add d
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 257 bytes | 257.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/hive4bee/studygit.git
+   59776cf..bca08ea  master -> master
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ cd ../git_home/
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git log
+commit 59776cf51f78117d7f36bccb61482887c261aa33 (HEAD -> master, origin/master, origin/HEAD)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:07:31 2020 +0900
+
+    add ccc
+
+commit 1d0d013660f8c4a47d9fb1e6a32c2936042d0b66
+Author: An Seongjin <66734106+hive4bee@users.noreply.github.com>
+Date:   Fri Jun 19 14:44:05 2020 +0900
+
+    Update 03_깃허브로 백업하기.txt
+
+commit 11888ece0357a11c4000ef2b164521318e6ac769
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:44:36 2020 +0900
+
+    f5
+
+commit e64a587a2b2e4bca8996e9e11994defbd88ea441
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:43:23 2020 +0900
+
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), 237 bytes | 1024 bytes/s, done.
+From https://github.com/hive4bee/studygit
+   59776cf..bca08ea  master     -> origin/master
+Updating 59776cf..bca08ea
+Fast-forward
+ f1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git log
+commit bca08ea55625e34d1a84c037624f9d2c7885fa35 (HEAD -> master, origin/master, origin/HEAD)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:12:53 2020 +0900
+
+    add d
+
+commit 59776cf51f78117d7f36bccb61482887c261aa33
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:07:31 2020 +0900
+
+    add ccc
+
+commit 1d0d013660f8c4a47d9fb1e6a32c2936042d0b66
+Author: An Seongjin <66734106+hive4bee@users.noreply.github.com>
+Date:   Fri Jun 19 14:44:05 2020 +0900
+
+    Update 03_깃허브로 백업하기.txt
+
+commit 11888ece0357a11c4000ef2b164521318e6ac769
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:44:36 2020 +0900
+
+---원격 브랜치 정보 가져오기
+//현재 git_office의 커밋이 원격 저장소의 최신 커밋일 것이다(add d)
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git log --oneline
+bca08ea (HEAD -> master, origin/master, origin/HEAD) add d
+59776cf add ccc
+1d0d013 Update 03_깃허브로 백업하기.txt
+11888ec f5
+e64a587 f4
+d71ab63 f3f3
+ed632c7 f3
+d474073 f2
+6bcb8d3 Merge branch 'master' of https://github.com/hive4bee/studygit
+07baa26 commit txt
+e5227f2 Merge branch 'master' of https://github.com/hive4bee/studygit
+d32fbb8 f1
+b63e6dc Initial commit
+//여기에서 HEAD->master는 이 커밋이 지역 저장소의 최종 커밋이라는 뜻이고,
+//orgin/master는 원격 저장소의 최종 커밋이라는 뜻이다
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ vim k1.txt
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git add k1.txt
+warning: LF will be replaced by CRLF in k1.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git commit -m "create k1.txt"
+[master c4e334a] create k1.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 k1.txt
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git log --oneline
+c4e334a (HEAD -> master) create k1.txt
+bca08ea (origin/master, origin/HEAD) add d
+59776cf add ccc
+1d0d013 Update 03_깃허브로 백업하기.txt
+11888ec f5
+e64a587 f4
+d71ab63 f3f3
+ed632c7 f3
+d474073 f2
+6bcb8d3 Merge branch 'master' of https://github.com/hive4bee/studygit
+07baa26 commit txt
+e5227f2 Merge branch 'master' of https://github.com/hive4bee/studygit
+d32fbb8 f1
+b63e6dc Initial commit
+//HEAD -> master는 방금 커밋한 create f3.txt를 가리킨다.(지역저장소)
+//하지만 origin/master, origin/HEAD 는 아직 add d 커밋을 가리키고 있다.
+//이 상태에서 git status를 입력해보자
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+//현재 master 브랜치가 origin에 있는 원격 msater 브랜치의 버전보다 하나 앞서 있는 것을 알 수 있다.
+//그리고 git push명령으로 지역 저장소의 커밋을 원격 저장소로 올리라고 알려주고 있다.
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 265 bytes | 265.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/hive4bee/studygit.git
+   bca08ea..c4e334a  master -> master
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ git log --oneline
+c4e334a (HEAD -> master, origin/master, origin/HEAD) create k1.txt
+bca08ea add d
+59776cf add ccc
+1d0d013 Update 03_깃허브로 백업하기.txt
+11888ec f5
+e64a587 f4
+d71ab63 f3f3
+ed632c7 f3
+d474073 f2
+6bcb8d3 Merge branch 'master' of https://github.com/hive4bee/studygit
+07baa26 commit txt
+e5227f2 Merge branch 'master' of https://github.com/hive4bee/studygit
+d32fbb8 f1
+b63e6dc Initial commit
+
+---원격 브랜치 정보 가져오기 git fetch
+//pull명령이 원격 저장소의 커밋을 가져와서 무조건 지역 저장소와 합친다면
+//페치 명령은 원격 브랜치에 있는 어떤 변화가 있는지 그 정보만 가져온다.
+//팀 작업을 할 때 다른 사람이 수정한 소스를 한번 더 훑어보고 지역 저장소와 합치고 싶다면
+//풀 대신 페치를 사용해서 커밋을 가져온 다음 지역 저장소와 합치면 된다.
+
+hong2@hong MINGW64 /d/ws/git_home (master)
+$ cd ../git_office/
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git log
+commit bca08ea55625e34d1a84c037624f9d2c7885fa35 (HEAD -> master, origin/master, origin/HEAD)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:12:53 2020 +0900
+
+    add d
+
+commit 59776cf51f78117d7f36bccb61482887c261aa33
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:07:31 2020 +0900
+
+    add ccc
+
+commit 1d0d013660f8c4a47d9fb1e6a32c2936042d0b66
+Author: An Seongjin <66734106+hive4bee@users.noreply.github.com>
+Date:   Fri Jun 19 14:44:05 2020 +0900
+
+    Update 03_깃허브로 백업하기.txt
+
+commit 11888ece0357a11c4000ef2b164521318e6ac769
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 14:44:36 2020 +0900
+
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git fetch
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), 245 bytes | 3.00 KiB/s, done.
+From https://github.com/hive4bee/studygit
+   bca08ea..c4e334a  master     -> origin/master
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ ls -al
+total 63
+drwxr-xr-x 1 hong2 197121     0  6월 19 15:12  ./
+drwxr-xr-x 1 hong2 197121     0  6월 19 15:06  ../
+drwxr-xr-x 1 hong2 197121     0  6월 19 15:24  .git/
+-rw-r--r-- 1 hong2 197121 15671  6월 19 15:04 '01_깃으로 버전관리하기.txt'
+-rw-r--r-- 1 hong2 197121 25962  6월 19 15:04 '02_깃과 브랜치.txt'
+-rw-r--r-- 1 hong2 197121   146  6월 19 15:04 '03_깃허브로 백업하기.txt'
+-rw-r--r-- 1 hong2 197121    14  6월 19 15:12  f1.txt
+-rw-r--r-- 1 hong2 197121     4  6월 19 15:04  f2.txt
+-rw-r--r-- 1 hong2 197121     7  6월 19 15:04  f3.txt
+-rw-r--r-- 1 hong2 197121     4  6월 19 15:04  f4.txt
+-rw-r--r-- 1 hong2 197121     4  6월 19 15:04  f5.txt
+-rw-r--r-- 1 hong2 197121    10  6월 19 15:04  README.md
+//아직 k1.txt파일이 보이지 않는 것을 알 수 있다.
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git status
+On branch master
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+//git status명령으로 확인해 보면 현재 브랜치가 origin/master에 비해 1개의 커밋이 뒤쳐지고 있다는 것을 알 수 있다.
+//즉 원격 저장소의 최신 커밋 하나가 아직 지역 저장소에 반영되지 않았다는 뜻이다. 
+//git pull명령을 사용하여 지역 저장소를 업데이트할 수 있다고 알려주고 있다.
+//그렇다면 fetch로 가져온 정보는 어디에 있을까
+//페치로 가져온 원격 저장소 정보는 origin/master 브랜치가 아닌 FETCH_HEAD라는 브랜치로 가져온다.
+//이 브랜치로 가져온 정보는 지역 저장소에 바로 반영되지 않는다.
+
+$ git checkout FETCH_HEAD
+Note: switching to 'FETCH_HEAD'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at c4e334a create k1.txt
+
+hong2@hong MINGW64 /d/ws/git_office ((c4e334a...))
+$ git log
+commit c4e334aea8760521acec03cfe2dfaa154b13b1b1 (HEAD, origin/master, origin/HEAD)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:18:45 2020 +0900
+
+    create k1.txt
+
+commit bca08ea55625e34d1a84c037624f9d2c7885fa35 (master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:12:53 2020 +0900
+
+    add d
+
+commit 59776cf51f78117d7f36bccb61482887c261aa33
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 15:07:31 2020 +0900
+
+    add ccc
+
+commit 1d0d013660f8c4a47d9fb1e6a32c2936042d0b66
+Author: An Seongjin <66734106+hive4bee@users.noreply.github.com>
+Date:   Fri Jun 19 14:44:05 2020 +0900
+
+
+hong2@hong MINGW64 /d/ws/git_office ((c4e334a...))
+$ git checkout master
+Previous HEAD position was c4e334a create k1.txt
+Switched to branch 'master'
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git merge FETCH_HEAD
+Updating bca08ea..c4e334a
+Fast-forward
+ k1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 k1.txt
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git log --oneline
+c4e334a (HEAD -> master, origin/master, origin/HEAD) create k1.txt
+bca08ea add d
+59776cf add ccc
+1d0d013 Update 03_깃허브로 백업하기.txt
+11888ec f5
+e64a587 f4
+d71ab63 f3f3
+ed632c7 f3
+d474073 f2
+6bcb8d3 Merge branch 'master' of https://github.com/hive4bee/studygit
+07baa26 commit txt
+e5227f2 Merge branch 'master' of https://github.com/hive4bee/studygit
+d32fbb8 f1
+b63e6dc Initial commit
+
+---협업에서 브랜치 사용하기
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git pull
+Already up to date.
+
+hong2@hong MINGW64 /d/ws/git_office (master)
+$ git checkout -b f
+Switched to a new branch 'f'
+//f브랜치를 만들고 f로 체크아웃한다.
+
+hong2@hong MINGW64 /d/ws/git_office (f)
+$ vim f1.txt //수정하고
+
+
+hong2@hong MINGW64 /d/ws/git_office (f)
+$ git commit -am "features1"
+[f 3f29324] features1
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/git_office (f)
+$ git push origin f
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 272 bytes | 272.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'f' on GitHub by visiting:
+remote:      https://github.com/hive4bee/studygit/pull/new/f
+remote:
+To https://github.com/hive4bee/studygit.git
+ * [new branch]      f -> f
+
