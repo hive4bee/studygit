@@ -1,0 +1,7 @@
+git remote add origin <URL>
+
+git pull origin master
+
+git push -u origin master // 최초에 한번만
+
+git push // 최초 푸시 이후에
