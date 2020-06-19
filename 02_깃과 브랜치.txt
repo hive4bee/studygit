@@ -1,0 +1,764 @@
+$ git init
+Initialized empty Git repository in D:/ws/manual/.git/
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ ls -al
+total 4
+drwxr-xr-x 1 hong2 197121 0  6월 19 12:23 ./
+drwxr-xr-x 1 hong2 197121 0  6월 19 12:22 ../
+drwxr-xr-x 1 hong2 197121 0  6월 19 12:23 .git/
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git add work.txt
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git commit -m "work 1"
+[master (root-commit) c240f0a] work 1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 work.txt
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git log
+commit c240f0a93454447e4f5d7aaa37fd2e7087021e85 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:23:34 2020 +0900
+
+    work 1
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git commit -am "work 2"
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+[master e12fee0] work 2
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git commit -am "work 3"
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+[master fb8b0c2] work 3
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git log
+commit fb8b0c2a9fba1acbd46d3ad3e65322b728ed21fa (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:24:56 2020 +0900
+
+    work 3
+
+commit e12fee0386b742c1eac7d35f9a85b899e3e97dd6
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:24:34 2020 +0900
+
+    work 2
+
+commit c240f0a93454447e4f5d7aaa37fd2e7087021e85
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:23:34 2020 +0900
+
+    work 1
+
+---브랜치 만들기
+$ git branch
+* master
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git branch apple
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git branch
+  apple
+* master
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git log
+commit fb8b0c2a9fba1acbd46d3ad3e65322b728ed21fa (HEAD -> master, apple)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:24:56 2020 +0900
+
+    work 3
+
+commit e12fee0386b742c1eac7d35f9a85b899e3e97dd6
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:24:34 2020 +0900
+
+    work 2
+
+commit c240f0a93454447e4f5d7aaa37fd2e7087021e85
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:23:34 2020 +0900
+
+    work 1
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git branch google
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git branch ms
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git branch
+  apple
+  google
+* master
+  ms
+
+---깃 브랜치 사이 이동하기 git checkout
+$ vim work.txt // connect 4추가....
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git commit -am "master connect 4"
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+[master ca3d71f] master connect 4
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git log --oneline
+ca3d71f (HEAD -> master) master connect 4
+fb8b0c2 (ms, google, apple) work 3
+e12fee0 work 2
+c240f0a work 1
+//master브랜치에 새로운 커밋을 추가한 후 
+//master 브랜치는 master connect 4커밋 상태이고
+//ms와 google, apple브랜치는 아직 work3커밋 상태이다
+
+hong2@hong MINGW64 /d/ws/manual (master)
+$ git checkout apple
+Switched to branch 'apple'
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$
+//즉 apple 브랜치의 최신 커밋은 처음 분기될 때인 work 3 커밋 그대로이다
+//그렇다면 work.txt파일에는 무엇이 있을까?
+$ cat work.txt
+connect 1
+connect 2
+connect 3
+//최신 커밋이 work3이기 때문에 connect3 까지 세 개의 행만 있다.
+//master브랜치에서 입력했던 connect 4가 없다.
+//이를 통해 apple브랜치가 master브랜치에서 분기된 이후에 
+//master 브랜치에 추가된 커밋은 apple브랜치에 영향을 미치지 않았다는 것을 알 수 있다.
+
+---브랜치 정보 확인하기
+//여기에서는 여러 브랜치에서 각각 커밋이 이루어질 때 커밋끼리 어떤 관계를 하고 있는지 확인하는 방법과
+//브랜치 사이의 차이점을 확인하는 방법을 알아본다.
+---새 브랜치에서 커밋하기
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ vim work.txt // apple connect 4라 입력하고 저장
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ ls
+work.txt
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ git add . // 현재 수저된 파일 모두 스테이지에 올림
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ git commit -m "apple content 4"
+[apple ef1d302] apple content 4
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ git log --oneline
+ef1d302 (HEAD -> apple) apple content 4
+fb8b0c2 (ms, google) work 3
+e12fee0 work 2
+c240f0a work 1
+//현재 apple 브랜치에 체크아웃한 상태이고, apple브랜치의 최신 커밋은 apple content4이다.
+
+---각 브랜치의 커밋을 함 께 보는 방법 git log --oneline --branches
+$ git log --oneline --branches
+ef1d302 (HEAD -> apple) apple content 4
+ca3d71f (master) master connect 4
+fb8b0c2 (ms, google) work 3
+e12fee0 work 2
+c240f0a work 1
+
+-- 브랜치와 커밋의 관계를 좀 더 보기 쉽게 그래프 형태로 표시하려면 --graph 옵션을 추가한다.
+$ git log --oneline --branches
+ef1d302 (HEAD -> apple) apple content 4
+ca3d71f (master) master connect 4
+fb8b0c2 (ms, google) work 3
+e12fee0 work 2
+c240f0a work 1
+
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ git log --oneline --branches --graph
+* ef1d302 (HEAD -> apple) apple content 4
+| * ca3d71f (master) master connect 4
+|/
+* fb8b0c2 (ms, google) work 3
+* e12fee0 work 2
+* c240f0a work 1
+//커밋 내역 왼쪽에 수직선(|)이 보이는데, 이 점선이 커밋과 커밋의 관계를 보여준다.
+//그래프를 살펴보면 apple브랜치의 최신 커밋은 apple content4인데,
+//점선을 따라 apple content4커밋의 부모를 찾아가 보면 work3커밋을 만나게 된다.
+//즉 apple브랜치에서는 work3커밋 다음에 apple content4커밋이 만들어졌다는 뜻이다.
+//master브랜치도 살펴보면, master브랜치의 최신 커밋은 master connect이다
+//그리고 수직선을 따라가 부모 커밋을 찾아보면 work3커밋이다 apple 브랜치의 커밋과 master브랜치의 커밋이
+//같은 부모 커밋을 가지고 있다. 즉 master브랜치나 apple브랜치는 work3커밋까지는 같고 그 이후부터
+//브랜치마다 다른 커밋을 만들었다는 사실을 알 수 있다.
+
+---이어서 ms 브랜치에 체크아웃하여 커밋하고 hard reset을 해보겠다
+hong2@hong MINGW64 /d/ws/manual (apple)
+$ git checkout ms
+Switched to branch 'ms'
+
+hong2@hong MINGW64 /d/ws/manual (ms)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual (ms)
+$ git commit -am "ms content4"
+[ms c0c1a0f] ms content4
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual (ms)
+$ git log --oneline --branches --graph
+* c0c1a0f (HEAD -> ms) ms content4
+| * ef1d302 (apple) apple content 4
+|/
+| * ca3d71f (master) master connect 4
+|/
+* fb8b0c2 (google) work 3
+* e12fee0 work 2
+* c240f0a work 1
+
+hong2@hong MINGW64 /d/ws/manual (ms)
+$ git reset --hard HEAD^
+HEAD is now at fb8b0c2 work 3
+
+hong2@hong MINGW64 /d/ws/manual (ms)
+$ git log --oneline --branches --graph
+* ef1d302 (apple) apple content 4
+| * ca3d71f (master) master connect 4
+|/
+* fb8b0c2 (HEAD -> ms, google) work 3
+* e12fee0 work 2
+* c240f0a work 1
+
+---브랜치 사이의 차이점 알아보기
+//브랜치마다 커밋이 점점 쌓여갈수록 브랜치 사이에 어떤 차이가 있는지 일일이 확인하기 어렵다
+//이럴 때는 브랜치 이름 사이에 마침표 두 개(..)를 넣는 명령으로 차이점을 쉽게 확인할 수 있다.
+//브랜치 이름과 마침표 사이는 공백없이 입력하며, 마침표 왼쪽에 있는 브랜치를 기준으로 오른쪽 브랜치와 비교한다.
+
+$ git log master..apple
+commit ef1d302387e5e122549aa77dd91ebaf85b69cb1a (apple)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:40:48 2020 +0900
+
+    apple content 4
+//이렇게 하면 master브랜치에는 없고 apple 브랜치에만 있는 커밋, 즉 apple content4커밋을 보여준다.
+$ git log apple..master
+commit ca3d71f93e7d942b103a6287a662c3d383954f04 (master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 12:29:31 2020 +0900
+
+    master connect 4
+//반대로 apple브랜치를 기준으로 master와 비교하면 apple브랜치에는 없고 master브랜치에만 있는 master connect 4커밋을 보여준다.
+
+---브랜치 병합하기
+//만들어진 각 브랜치에서 작업을 하다가 어느 시점에서는 브랜치 작업을 마무리하고 기존 브랜치와 합해야 한다.
+//이것을 브랜치 병합(merge)이라고 한다.
+//브랜치와 브랜치를 병합하다 보면 여러 상황이 생길 수 있는데 각 상황마다 병하하는 방법을 알아보겠다.
+//그리고 병합하면서 브랜치 사이에 충돌이 있을 때 해결하는 방법도 살펴본다.
+
+************************************************************************
+************************************************************************
+************************************************************************
+
+---서로 다른 파일 병합하기
+$ pwd
+/d/ws
+
+hong2@hong MINGW64 /d/ws
+$ git init manual-2
+Initialized empty Git repository in D:/ws/manual-2/.git/
+//git init 다음 디렉토리를 지정하면 해당 디렉토리에 저장소를 초기화한다.
+$ vim work.txt // 1입력하고 저장
+$ git add work.txt
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ git commit -m "work 1"
+[master (root-commit) 339f4cc] work 1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 work.txt
+
+$ git branch o2
+
+$ git log --oneline
+339f4cc (HEAD -> master, o2) work 1
+
+$ vim master.txt // master2라 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ git add master.txt
+warning: LF will be replaced by CRLF in master.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ git commit -m "master work 2"
+[master 724c98c] master work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 master.txt
+
+$ git log --oneline --branches --graph
+* 724c98c (HEAD -> master) master work 2
+* 339f4cc (o2) work 1
+
+$ vim o2.txt // o2 2 라 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/manual-2 (o2)
+$ git add o2.txt
+warning: LF will be replaced by CRLF in o2.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual-2 (o2)
+$ git commit -m "o2 work 2"
+[o2 430b055] o2 work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+hong2@hong MINGW64 /d/ws/manual-2 (o2)
+$ git log --oneline --branches --graph
+* 430b055 (HEAD -> o2) o2 work 2
+| * 724c98c (master) master work 2
+|/
+* 339f4cc work 1
+
+hong2@hong MINGW64 /d/ws/manual-2 (o2)
+$ git checkout master
+Switched to branch 'master'
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ git merge o2
+Merge made by the 'recursive' strategy.
+ o2.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ ls -al
+total 7
+drwxr-xr-x 1 hong2 197121 0  6월 19 13:05 ./
+drwxr-xr-x 1 hong2 197121 0  6월 19 12:58 ../
+drwxr-xr-x 1 hong2 197121 0  6월 19 13:05 .git/
+-rw-r--r-- 1 hong2 197121 9  6월 19 13:05 master.txt
+-rw-r--r-- 1 hong2 197121 6  6월 19 13:05 o2.txt
+-rw-r--r-- 1 hong2 197121 2  6월 19 12:59 work.txt
+//merge된 것을 확인할 수 있다.
+
+hong2@hong MINGW64 /d/ws/manual-2 (master)
+$ git  log --oneline --branches --graph
+*   4505866 (HEAD -> master) Merge branch 'o2'
+|\
+| * 430b055 (o2) o2 work 2
+* | 724c98c master work 2
+|/
+* 339f4cc work 1
+
+//master브랜치에서 브랜치를 분기한 후에 master 브랜치에 아무 변화가 없다면(새로운 커밋을 만들지 않았다면)
+//분기한 브랜치를 병합하는 것은 간단하다. 분기한 브랜치에서 만든 최신 커밋을 master브랜치가 가리키게만 하면 되기 때문이다
+//이 경우에는 화면에 커밋 해시가 업데이트 되었다는 내용과 함께 fast-forward라는 메시지가 나타난다.
+//이런 병합을 빨리 감기 병합(fast-forward merge)이라고 부른다. 
+//git merge명령의 결과가 단순히 포인터를 움직인 것이기 때문에 따로 커밋 메시지 창은 열리지 않는다.
+
+************************************************************************
+************************************************************************
+************************************************************************
+
+---같은 문서의 다른 위치를 수정했을 때 병합하기
+$ git init manual-3
+Initialized empty Git repository in D:/ws/manual-3/.git/
+
+$ cd manual-3
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git add work.txt
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git commit -m "work 1"
+[master (root-commit) 733f843] work 1
+ 1 file changed, 6 insertions(+)
+ create mode 100644 work.txt
+
+$ git branch o2
+//현재 master브랜치와 o2브랜치에는 모두 work 1커밋이 있게 된다.
+
+$ vim work.txt //master content 2 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git commit -am "master work 2"
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+[master a6fe551] master work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git checkout o2
+Switched to branch 'o2'
+
+hong2@hong MINGW64 /d/ws/manual-3 (o2)
+$ vim work.txt // o2 content 2 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/manual-3 (o2)
+$ git commit -am "o2 work 2"
+[o2 bee0c83] o2 work 2
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual-3 (o2)
+$ git checkout master
+Switched to branch 'master'
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git log --oneline --branches --graph
+* bee0c83 (o2) o2 work 2
+| * a6fe551 (HEAD -> master) master work 2
+|/
+* 733f843 work 1
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ git merge o2
+Auto-merging work.txt
+Merge made by the 'recursive' strategy.
+ work.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+hong2@hong MINGW64 /d/ws/manual-3 (master)
+$ cat work.txt
+# title
+content
+master content2
+
+#title
+content
+o2 content 2
+
+************************************************************************
+************************************************************************
+************************************************************************
+
+---같은 문서의 같은 위치를 수정했을 때 병합하기
+//깃에서는 줄 단위로 변경 여부를 확인한다. 그래서 각 브랜치에 같은 파일 이름을 가지고있으면서 같은 줄을 수정했을 때
+//브랜치를 병합하면 브랜치 충돌(conflict)이 발생한다.
+//master브랜치와 o2브랜치에서 같은 파일의 같은 위치를 수정한 후 병합해 보면서 어떤 경우에 브랜치 충돌이 생기는지,
+//그리고 어떻게 충돌을 해결하는지 알아본다.
+
+$ git init manual-4
+Initialized empty Git repository in D:/ws/manual-4/.git/
+
+hong2@hong MINGW64 /d/ws
+$ cd manual-4
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ ls -al
+total 8
+drwxr-xr-x 1 hong2 197121 0  6월 19 13:24 ./
+drwxr-xr-x 1 hong2 197121 0  6월 19 13:24 ../
+drwxr-xr-x 1 hong2 197121 0  6월 19 13:24 .git/
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git add work.txt
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git commit -m "work 1"
+[master (root-commit) 9174f61] work 1
+ 1 file changed, 4 insertions(+)
+ create mode 100644 work.txt
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git branch o2
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git commit -am "master work 2"
+warning: LF will be replaced by CRLF in work.txt.
+The file will have its original line endings in your working directory
+[master aae9b63] master work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git checkout o2
+Switched to branch 'o2'
+
+hong2@hong MINGW64 /d/ws/manual-4 (o2)
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual-4 (o2)
+$ git commit -am "o2 work 2"
+[o2 9654c99] o2 work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+hong2@hong MINGW64 /d/ws/manual-4 (o2)
+$ git checkout master
+Switched to branch 'master'
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git merge o2
+Auto-merging work.txt
+CONFLICT (content): Merge conflict in work.txt
+Automatic merge failed; fix conflicts and then commit the result.
+//충돌이 발생한 것을 확인한다.
+
+//충돌은 사용자가 직접 수정해야 한다.
+//vim work.txt
+#title
+<<<<<<< HEAD
+master content 2
+=======
+o2 content 2
+>>>>>>> o2
+#title
+content
+
+$ vim work.txt
+
+hong2@hong MINGW64 /d/ws/manual-4 (master|MERGING)
+$ git commit -am "merge o2 branch"
+[master d943434] merge o2 branch
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git log --oneline --branches --graph
+*   d943434 (HEAD -> master) merge o2 branch
+|\
+| * 9654c99 (o2) o2 work 2
+* | aae9b63 master work 2
+|/
+* 9174f61 work 1
+
+//프로젝트 규모가 클수록 브랜치가 많으므로 브랜치에서 병합해야 할 파일도 많아진다.
+//그만큼 충돌이 생기게 되는데, 그래서 깃의 브랜치 병합을 자동으로 처리해 주고 충돌을 해결해 주는 프로그램이 많이 있다.
+//병합 알고리즘에는 2 way merge와 3 way merge가 있는데, 3 way merge가 훨씬 효율적이므로
+//3 way merge를 지원하는 프로그램을 선택하는 것이 좋다.
+//P4Merge : 무료, 편리, 병합기능이 뛰어남, 단축키 지원 X
+//Meld : 무료, 오픈소스, 파일을 비교하는 것뿐만 아니라 직접 편집할 수 이싿.
+//Kdiff3 : 무료, 편리, 병합기능이 뛰어남, 한글이 깨짐
+//Araxix Merge : 유료지만 용량이 큰 파일에서도 잘 작동한다.
+
+---병합이 끝난 브랜치 삭제하기
+//브랜치를 병합한 후 더 이상 사용하지 않는 브랜치는 깃에서 삭제할 수 있다.
+//단, 이렇게 브랜치를 삭제하더라도 이 브랜치가 완전히 지원지는 것이 아니라
+//다시 같은 이름의 브랜치를 만들면 예전 내용을 다시 볼 수 있다.
+$ git branch
+* master
+  o2
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git checkout master
+Already on 'master'
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git branch -d o2
+Deleted branch o2 (was 9654c99).
+
+hong2@hong MINGW64 /d/ws/manual-4 (master)
+$ git branch
+* master
+
+---브랜치 관리하기
+//여기에서는 깃과 브랜치를 더 편하게 관리하기 위한 몇 가지 명령을 살펴본다.
+---브랜치에서 checkout과 reset의 작동원리
+$ git init test
+Initialized empty Git repository in D:/ws/test/.git/
+
+hong2@hong MINGW64 /d/ws
+$ cd test
+
+$ vim c1.txt
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git add c1.txt
+warning: LF will be replaced by CRLF in c1.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git commit -m "c1"
+[master (root-commit) 56b7e9a] c1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 c1.txt
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git log --oneline
+56b7e9a (HEAD -> master) c1
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git branch sub
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ vim c2.txt
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git add c2.txt
+warning: LF will be replaced by CRLF in c2.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git commit -m "c2"
+[master 9618a56] c2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 c2.txt
+
+hong2@hong MINGW64 /d/ws/test (master)
+$ git checkout sub
+Switched to branch 'sub'
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ vim s1.txt
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git add s1.txt
+warning: LF will be replaced by CRLF in s1.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git commit -m "s1"
+[sub 477adc1] s1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 s1.txt
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git log --oneline --branches
+477adc1 (HEAD -> sub) s1
+9618a56 (master) c2
+56b7e9a c1
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git log --oneline --branches --graph
+* 477adc1 (HEAD -> sub) s1
+| * 9618a56 (master) c2
+|/
+* 56b7e9a c1
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git reset 9618a56
+Unstaged changes after reset:
+D       c2.txt
+
+hong2@hong MINGW64 /d/ws/test (sub)
+$ git log --oneline --branches --graph
+* 9618a56 (HEAD -> sub, master) c2
+* 56b7e9a c1
+//sub브랜치의 최신 커밋이 master브랜치의 최신 커밋인 c2로 바뀌었다.
+//그리고 HEAD는 그대로 sub브랜치를 가리키고 있다.
+//이렇게 gi reset 명령을 사용하면 현재 브랜치가 가리키는 커밋을 여러 브랜치 사이를 넘나들면서 제어할 수 있다.
+//이제 sub브ㅐㄹㄴ치는 c2커밋을 가리키고 있기 때문에 원래 가리키고 있던 s1커밋은 연결이 끊기면서 삭제된다.
+
+//정리해보면 git checkout 명령을 사용하면 HEAD를 제어해서 브랜치를 이동할 수 있는데
+//git reset명령을 사용하면 HEAD가 가리키고 있는 브랜치의 최신 커밋을 원하는 커밋으로 지정할 수 있다.
+//이때 어떤 브랜치에 있는 커밋이든 지정할 수 있으며, 명령을 수행한 뒤 브랜치와 연결이 끊긴 커밋을 삭제한다.
+
+---수정 중인 파일 감추기 및 되돌리기 git stash
+//아직 커밋하지 않고 작업 중인 파일들을 잠시 감춰두고 커밋을 해보자
+$ git init st
+Initialized empty Git repository in D:/ws/st/.git/
+
+hong2@hong MINGW64 /d/ws
+$ cd st
+
+$ vim f1.txt // f1이라고 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git add f1.txt
+warning: LF will be replaced by CRLF in f1.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git commit -m "f1"
+[master (root-commit) 388ba52] f1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f1.txt
+
+$ vim f2.txt // f2라 입력하고 저장한다.
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git add f2.txt
+warning: LF will be replaced by CRLF in f2.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git commit -m "f2"
+[master bebb36e] f2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f2.txt
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ vim f1.txt // 아무렇게 수정
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ vim f2.txt // 아무렇게 수정
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   f1.txt
+        modified:   f2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+//수정된 것을 확인
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git stash
+warning: LF will be replaced by CRLF in f1.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in f2.txt.
+The file will have its original line endings in your working directory
+Saved working directory and index state WIP on master: bebb36e f2
+
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+//다시 한번 git status 명령을 실행해 보면 위의 modified 메시지가 사라진 것을 확인할 수 있다.
+
+$ git stash list
+stash@{0}: WIP on master: bebb36e f2
+//stash 목록을 확인할 수 있다.
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git stash list
+stash@{0}: WIP on master: bebb36e f2
+
+hong2@hong MINGW64 /d/ws/st (master)
+$ git stash pop
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   f1.txt
+        modified:   f2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (2d5a22085d7f1ca16d69df7bed6ee6c418ebe981)
+//급한 작업을 모두 마쳤다면 감춰둔 파일을 꺼내와 계속 수정하거나 커밋할 수 있다.
+//git stash pop을 통해 stash목록에서 가장 최근 항목을 되돌린다. 여기에는 f1.txt, f2.txt가 수정된 상태로 되돌아간다.
+

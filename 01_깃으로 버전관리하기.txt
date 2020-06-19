@@ -1,0 +1,556 @@
+---깃 환경설정하기
+git config --global user.name "hive4bee"
+git config --global user.email "hive4bee@gmail.com"
+
+---깃 초기화하기
+git init
+
+---깃의 상태 확인해보기
+vim hello.txt // 1입력
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        hello.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+//untracked files 메시지를 확인할 수 있는데 깃에서 버전 관리하지 않은 파일을  untracked files라 한다
+
+---수정한 파일을 스테이징하기 - git add
+git add hello.txt
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   hello.txt
+//changes to be commited 메시지를 확인할 수 있다.
+
+---스테이지에 올라온 파일 커밋하기 git commit
+$ git commit -m "message1"
+[master (root-commit) 32de534] message1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello.txt
+
+---로그확인하기
+$ git log
+commit 32de5343efffd9a87be3b0029c58b2045f1fa158 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:06:29 2020 +0900
+
+    message1
+
+---스테이징과 커밋 한꺼번에 처리하기 git commit -am
+$ git commit -am "message2"
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+[master 56ec20b] message2
+ 1 file changed, 1 insertion(+)
+$ git log
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+commit 32de5343efffd9a87be3b0029c58b2045f1fa158
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:06:29 2020 +0900
+
+    message1
+
+---변경사항 확인하기 git diff
+$ vim hello.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+//changes not staged for commit 메시지를 확인할 수 있다.
+$ git diff
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+diff --git a/hello.txt b/hello.txt
+index 1191247..0b66db0 100644
+--- a/hello.txt
++++ b/hello.txt
+@@ -1,2 +1,2 @@
+ 1
+-2
++two
+
+---tracked와 untracked파일
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add hello.txt
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+$ git add hello2.txt
+warning: LF will be replaced by CRLF in hello2.txt.
+The file will have its original line endings in your working directory
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello.txt
+        new file:   hello2.txt
+$ git commit -m "message3"
+[master 87cdd27] message3
+ 2 files changed, 4 insertions(+)
+ create mode 100644 hello2.txt
+$ git log
+commit 87cdd2793dfd47cf8fd160e85ba57c1acb7fcbaa (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message3
+
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+commit 32de5343efffd9a87be3b0029c58b2045f1fa158
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:06:29 2020 +0900
+
+    message1
+---커밋에 관련된 파일까지 함께 살펴보려면 git log 명령에 --stat옵션을 사용한다.
+$ git log --stat
+commit 87cdd2793dfd47cf8fd160e85ba57c1acb7fcbaa (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+commit 87cdd2793dfd47cf8fd160e85ba57c1acb7fcbaa (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message3
+
+ hello.txt  | 1 +
+ hello2.txt | 3 +++
+ 2 files changed, 4 insertions(+)
+
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+ hello.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 32de5343efffd9a87be3b0029c58b2045f1fa158
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:06:29 2020 +0900
+//message3커밋은 hello.txt, hello2.txt와 관련된 것을 알 수 있다.
+
+---방금 커밋한 메시지 수정하기 git commit --amend
+$ git commit --amend
+[master 46026b6] message33
+ Date: Fri Jun 19 11:15:48 2020 +0900
+ 2 files changed, 4 insertions(+)
+ create mode 100644 hello2.txt
+
+---작업트리에서 수정한 파일 되돌리기 git checkout
+$ vim hello.txt
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git checkout -- hello.txt 
+//더블 대쉬 뒤에 빈칸이 있어야 한다. 또는 git restore hello.txt를 사용한다.
+
+$ cat hello.txt
+
+---스테이징 되돌리기 git reset HEAD 파일이름
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ vim hello2.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git add hello2.txt
+warning: LF will be replaced by CRLF in hello2.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello2.txt
+
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git reset HEAD hello2.txt
+Unstaged changes after reset:
+M       hello2.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git add hello2.txt
+warning: LF will be replaced by CRLF in hello2.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello2.txt
+
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git restore --staged hello2.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+//git reset HEAD hello2.txt 또는 git restore --staged hello2.txt를 사용한다
+
+---최신 커밋 되돌리기 git reset HEAD^
+$vim hello2.txt
+$ git commit -am "message4"
+[master fba6003] message4
+ 1 file changed, 2 insertions(+)
+ 
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git reset HEAD^
+Unstaged changes after reset:
+M       hello2.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git log
+commit 46026b6913ef2facb9831dfd869f8b42ab67bf71 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message33
+
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+commit 32de5343efffd9a87be3b0029c58b2045f1fa158
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:06:29 2020 +0900
+
+    message1
+
+---git reset 명령의 옵션 살펴보기
+---soft HEAD^ : 최근 커밋을 하기전 상태로 작업트리를 되돌린다.
+---mixed HEAD^ : 최근 커밋과 스테이징을 하기 전 상태로 작업 트리를 되돌린다. 옵션 없이 git reset명령을 사용할 경우 이 옵션을 기본적으로 작동한다.
+---hard HEAD^ : 최근 커밋과 스테이징, 파일 수정을 하기 전 상태로 작업 트리를 되돌린다. 이 옵션으로 되돌린 내용은 복구할 수 없다.
+
+---특정 커밋으로 되돌리기 git reset 커밋 해시
+$ vim rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git add rev.txt
+warning: LF will be replaced by CRLF in rev.txt.
+The file will have its original line endings in your working directory
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git commit -m "R1"
+[master daa8c5b] R1
+ 1 file changed, 3 insertions(+)
+ create mode 100644 rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ vim rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   rev.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git commit -a -m "R2"
+warning: LF will be replaced by CRLF in rev.txt.
+The file will have its original line endings in your working directory
+[master 45fadaf] R2
+ 1 file changed, 2 insertions(+)
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git log
+commit 45fadaf6e2e4feed2f6b0a255071c2ad25f29806 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:55 2020 +0900
+
+    R2
+
+commit daa8c5b40025e45efdc0be834e49ce56f269fa43
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:11 2020 +0900
+
+    R1
+
+commit 46026b6913ef2facb9831dfd869f8b42ab67bf71
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message33
+
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ vim rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git commit -am "R3"
+warning: LF will be replaced by CRLF in rev.txt.
+The file will have its original line endings in your working directory
+[master 4851748] R3
+ 1 file changed, 2 insertions(+)
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ vim rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git commit -am "R4"
+warning: LF will be replaced by CRLF in rev.txt.
+The file will have its original line endings in your working directory
+[master 930e19d] R4
+ 1 file changed, 2 insertions(+)
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git log
+commit 930e19dc92225a438dd627f4462514ae7d0498dc (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:49:19 2020 +0900
+
+    R4
+
+commit 48517480bb36c2ee241549fe5548a4897a73f4dd
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:49:02 2020 +0900
+
+    R3
+
+commit 45fadaf6e2e4feed2f6b0a255071c2ad25f29806
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:55 2020 +0900
+
+    R2
+
+commit daa8c5b40025e45efdc0be834e49ce56f269fa43
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:11 2020 +0900
+
+    R1
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git reset --hard 45fadaf6e2e4feed2f6b0a255071c2ad25f29806
+HEAD is now at 45fadaf R2
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git log
+commit 45fadaf6e2e4feed2f6b0a255071c2ad25f29806 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:55 2020 +0900
+
+    R2
+
+commit daa8c5b40025e45efdc0be834e49ce56f269fa43
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:11 2020 +0900
+
+    R1
+
+commit 46026b6913ef2facb9831dfd869f8b42ab67bf71
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message33
+
+commit 56ec20b7f6781f1ca2d6debf48a73e2f89c3b983
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:09:16 2020 +0900
+
+    message2
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ cat rev.txt
+a
+a
+a
+b
+b
+
+---커밋 삭제하지 않고 되돌리기 git revert
+$ vim rev.txt
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ cat rev.txt
+a
+a
+a
+b
+b
+e
+e
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git commit -am "R5"
+[master 6381c4e] R5
+ 1 file changed, 2 insertions(+)
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git log
+commit 6381c4e2a06721b25019ad3bd5afed1352cefa9d (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:54:05 2020 +0900
+
+    R5
+
+commit 45fadaf6e2e4feed2f6b0a255071c2ad25f29806
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:55 2020 +0900
+
+    R2
+
+commit daa8c5b40025e45efdc0be834e49ce56f269fa43
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:11 2020 +0900
+
+    R1
+
+commit 46026b6913ef2facb9831dfd869f8b42ab67bf71
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:15:48 2020 +0900
+
+    message33
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git revert 6381c4e2a06721b25019ad3bd5afed1352cefa9d
+[master f0e79d6] Revert "R5"
+ 1 file changed, 2 deletions(-)
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git log
+commit f0e79d6871cc2f14bb8e8cfd688aca635200acf0 (HEAD -> master)
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:54:59 2020 +0900
+
+    Revert "R5"
+
+    temporary commit
+
+    This reverts commit 6381c4e2a06721b25019ad3bd5afed1352cefa9d.
+
+commit 6381c4e2a06721b25019ad3bd5afed1352cefa9d
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:54:05 2020 +0900
+
+    R5
+
+commit 45fadaf6e2e4feed2f6b0a255071c2ad25f29806
+Author: hive4bee <hive4bee@gmail.com>
+Date:   Fri Jun 19 11:47:55 2020 +0900
+
+    R2
+
+commit daa8c5b40025e45efdc0be834e49ce56f269fa43
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ cat rev.txt
+a
+a
+a
+b
+b
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ git reset --hard 6381c4e2a06721b25019ad3bd5afed1352cefa9d
+HEAD is now at 6381c4e R5
+
+hong2@hong MINGW64 /d/ws/hello-git (master)
+$ cat rev.txt
+a
+a
+a
+b
+b
+e
+e
